@@ -2,6 +2,7 @@ package com.ie.cicd_project_1_applicationlayer;
 
 import com.ie.cicd_project_1_applicationlayer.repository.PortalServiceClient;
 import feign.FeignException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class ProductController {
     }
 
     @PostMapping("/newProduct")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product createdProduct = portalServiceClient.createProduct(product);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+    public ResponseEntity<Product> updateProduct(@Valid @PathVariable Long id, @RequestBody Product productDetails) {
         try {
             Product updatedProduct = portalServiceClient.updateProduct(id, productDetails);
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
