@@ -4,7 +4,6 @@ import com.ie.cicd_project_1_applicationlayer.Order;
 import com.ie.cicd_project_1_applicationlayer.Product;
 import com.ie.cicd_project_1_applicationlayer.User;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,33 +16,33 @@ public interface PortalServiceClient {
     String registerUser(@RequestBody User user);
 
     @GetMapping("/users")
-    List<User> getAllUsers();
+    String getAllUsers();
 
     @GetMapping("/users/{id}")
-    User getUserById(@PathVariable Long id);
+    String getUserById(@PathVariable Long id);
 
     @PutMapping("/users/{id}")
-    User updateUser(@PathVariable Long id, @RequestBody User userDetails);
+    String updateUser(@PathVariable Long id, @RequestBody User userDetails);
 
     @DeleteMapping("/users/{id}")
-    ResponseEntity<String> deleteUser(@PathVariable Long id);
+    String deleteUser(@PathVariable Long id);
     //-----USER API METHODS
 
     //PRODUCT API METHODS------
     @PostMapping("/products/newProduct")
-    Product createProduct(@RequestBody Product product);
+    String createProduct(@RequestBody Product product);
 
     @GetMapping("/products")
-    List<Product> getAllProducts();
+    String getAllProducts();
 
     @GetMapping("/products/{id}")
-    Product getProductById(@PathVariable Long id);
+    String getProductById(@PathVariable Long id);
 
     @PutMapping("/products/{id}")
-    Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails);
+    String updateProduct(@PathVariable Long id, @RequestBody Product productDetails);
 
     @DeleteMapping("/products/{id}")
-    ResponseEntity<String> deleteProduct(@PathVariable Long id);
+    String deleteProduct(@PathVariable Long id);
     //----PRODUCT API METHODS
 
     //ORDER API METHODS-----
