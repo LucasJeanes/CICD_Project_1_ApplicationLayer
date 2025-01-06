@@ -48,21 +48,21 @@ public interface PortalServiceClient {
 
     //ORDER API METHODS-----
     @PostMapping("/orders/newOrder")
-    Order createOrder(@RequestBody Order order);
+    String createOrder(@RequestBody Order order);
 
     @GetMapping("/orders")
-    List<Order> getAllOrders();
+    String getAllOrders();
 
     @GetMapping("/orders/{id}")
-    Order getOrderById(@PathVariable Long id);
+    String getOrderById(@PathVariable Long id);
 
     @GetMapping("/orders/user/{userId}")
-    List<Order> getOrdersByUserId(@PathVariable Long userId);
+    String getOrdersByUserId(@PathVariable Long userId);
 
     @PutMapping("/orders/{id}")
-    Order updateOrder(@PathVariable Long id, @RequestBody Order orderDetails);
+    String updateOrder(@PathVariable Long id, @RequestBody Order orderDetails);
 
     @DeleteMapping("/orders/{id}")
-    void deleteOrder(@PathVariable Long id);
+    String deleteOrder(@PathVariable Long id);
     //-----ORDER API METHODS
 }
