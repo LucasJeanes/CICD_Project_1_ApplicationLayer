@@ -22,21 +22,21 @@ public class OrderController {
     }
 
     @PostMapping("/newOrder")
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
-        Order createdOrder = portalServiceClient.createOrder(order);
+    public ResponseEntity<String> createOrder(@Valid @RequestBody Order order) {
+        String createdOrder = portalServiceClient.createOrder(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = portalServiceClient.getAllOrders();
+    public ResponseEntity<String> getAllOrders() {
+        String orders = portalServiceClient.getAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<String> getOrderById(@PathVariable Long id) {
         try {
-            Order order = portalServiceClient.getOrderById(id);
+            String order = portalServiceClient.getOrderById(id);
             return new ResponseEntity<>(order, HttpStatus.OK);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,15 +44,15 @@ public class OrderController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
-        List<Order> orders = portalServiceClient.getOrdersByUserId(userId);
+    public ResponseEntity<String> getOrdersByUserId(@PathVariable Long userId) {
+        String orders = portalServiceClient.getOrdersByUserId(userId);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@Valid @PathVariable Long id, @RequestBody Order orderDetails) {
+    public ResponseEntity<String> updateOrder(@Valid @PathVariable Long id, @RequestBody Order orderDetails) {
         try {
-            Order updatedOrder = portalServiceClient.updateOrder(id, orderDetails);
+            String updatedOrder = portalServiceClient.updateOrder(id, orderDetails);
             return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,10 +60,10 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
         try {
-            portalServiceClient.deleteOrder(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            String deletedOrder = portalServiceClient.deleteOrder(id);
+            return new ResponseEntity<>(deletedOrder, HttpStatus.NO_CONTENT);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
