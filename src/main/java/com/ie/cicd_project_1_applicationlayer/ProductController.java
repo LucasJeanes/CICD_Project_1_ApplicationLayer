@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -22,21 +20,21 @@ public class ProductController {
     }
 
     @PostMapping("/newProduct")
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
-        Product createdProduct = portalServiceClient.createProduct(product);
+    public ResponseEntity<String> createProduct(@Valid @RequestBody Product product) {
+        String createdProduct = portalServiceClient.createProduct(product);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = portalServiceClient.getAllProducts();
+    public ResponseEntity<String> getAllProducts() {
+        String products = portalServiceClient.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<String> getProductById(@PathVariable Long id) {
         try {
-            Product product = portalServiceClient.getProductById(id);
+            String product = portalServiceClient.getProductById(id);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,9 +42,9 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@Valid @PathVariable Long id, @RequestBody Product productDetails) {
+    public ResponseEntity<String> updateProduct(@Valid @PathVariable Long id, @RequestBody Product productDetails) {
         try {
-            Product updatedProduct = portalServiceClient.updateProduct(id, productDetails);
+            String updatedProduct = portalServiceClient.updateProduct(id, productDetails);
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,6 +53,11 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        return portalServiceClient.deleteProduct(id);
+        try {
+            String response = portalServiceClient.deleteProduct(id);
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        } catch (FeignException.NotFound e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

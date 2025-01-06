@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -28,15 +26,15 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = portalServiceClient.getAllUsers();
+    public ResponseEntity<String> getAllUsers() {
+        String users = portalServiceClient.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<String> getUserById(@PathVariable Long id) {
         try {
-            User user = portalServiceClient.getUserById(id);
+            String user = portalServiceClient.getUserById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (FeignException.NotFound e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,14 +42,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@Valid @PathVariable Long id, @RequestBody User userDetails) {
-        User updatedUser = portalServiceClient.updateUser(id, userDetails);
+    public ResponseEntity<String> updateUser(@Valid @PathVariable Long id, @RequestBody User userDetails) {
+        String updatedUser = portalServiceClient.updateUser(id, userDetails);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        ResponseEntity<String> response = portalServiceClient.deleteUser(id);
-        return response;
+        try {
+            String response = portalServiceClient.deleteUser(id);
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        } catch (FeignException.NotFound e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
