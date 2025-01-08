@@ -44,5 +44,5 @@ jobs:
 
       - name: Push Docker Image
         run: |
-          docker tag applicationlayerimage ${{ secrets.DOCKER_USERNAME }}/applicationlayerimage:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/applicationlayerimage:latest
+          docker tag applicationlayerimage ${{ secrets.DOCKER_USERNAME }}/applicationlayerimage:latest \
+          && docker push ${{ secrets.DOCKER_USERNAME }}/applicationlayerimage:latest
