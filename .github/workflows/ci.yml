@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '23'
-          distribution: 'openjdk'
+          distribution: 'temurin'
 
       # Step to build the project using Maven
       - name: Build with Maven
