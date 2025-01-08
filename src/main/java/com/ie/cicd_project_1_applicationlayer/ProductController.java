@@ -21,6 +21,15 @@ public class ProductController {
 
     @PostMapping("/newProduct")
     public ResponseEntity<String> createProduct(@Valid @RequestBody Product product) {
+        if(product.getName() == null || product.getName().isEmpty()) {
+            throw new IllegalArgumentException("product name is required.");
+        }
+        if(product.getPrice() <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0.");
+        }
+        if(product.getQuantity() == null || product.getQuantity() < 0) {
+            throw new IllegalArgumentException("Quantity must be a non-negative integer.");
+        }
         String createdProduct = portalServiceClient.createProduct(product);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }

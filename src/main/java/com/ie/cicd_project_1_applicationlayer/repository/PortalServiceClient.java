@@ -6,8 +6,6 @@ import com.ie.cicd_project_1_applicationlayer.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @FeignClient(name = "service-layer", url = "${feign.service-layer.url}")
 public interface PortalServiceClient {
 
