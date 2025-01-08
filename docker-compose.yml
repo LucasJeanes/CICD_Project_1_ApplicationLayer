@@ -1,0 +1,34 @@
+services:
+  application-layer:
+    image: applicationlayerimage
+    build:
+      context: ./CICD_Project_1_ApplicationLayer
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - my_network
+
+  service-layer:
+    image: servicelayerimage
+    build:
+      context: ./CICD_Project_2_ServiceLayer
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - my_network
+  
+  notification-layer:
+    image: notificationlayerimage
+    build:
+      context: ./CICD_Project_3_NotificationLayer
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - my_network
+      
+networks:
+    my_network:
+        driver: bridge
