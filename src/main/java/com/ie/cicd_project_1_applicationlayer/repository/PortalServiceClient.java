@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "service-layer", url = "http://localhost:8082")
+@FeignClient(name = "service-layer", url = "${feign.service-layer.url}")
 public interface PortalServiceClient {
 
     //USER API METHODS-----

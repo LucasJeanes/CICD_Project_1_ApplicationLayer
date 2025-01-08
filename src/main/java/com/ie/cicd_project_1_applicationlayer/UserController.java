@@ -1,5 +1,7 @@
 package com.ie.cicd_project_1_applicationlayer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.ie.cicd_project_1_applicationlayer.repository.PortalServiceClient;
 import feign.FeignException;
 import jakarta.validation.Valid;
@@ -13,16 +15,32 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final PortalServiceClient portalServiceClient;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(PortalServiceClient portalServiceClient) {
         this.portalServiceClient = portalServiceClient;
     }
 
+//    @PostMapping("/register")
+//    public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
+//        System.out.println("Inputted user registration: " + user);
+//        String response = portalServiceClient.registerUser(user);
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
+//    }
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
-        String response = portalServiceClient.registerUser(user);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        logger.info("Inputted user registration: {}", user);
+        String response;
+
+        try {
+            response = portalServiceClient.registerUser(user);
+            logger.info("User registration successful: {}", response);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error during user registration: {}", e.getMessage(), e);
+            return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping
