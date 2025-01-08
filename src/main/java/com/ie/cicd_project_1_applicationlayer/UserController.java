@@ -22,12 +22,6 @@ public class UserController {
         this.portalServiceClient = portalServiceClient;
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
-//        System.out.println("Inputted user registration: " + user);
-//        String response = portalServiceClient.registerUser(user);
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);
-//    }
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
         logger.info("Inputted user registration: {}", user);
